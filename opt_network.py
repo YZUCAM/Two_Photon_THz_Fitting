@@ -25,7 +25,7 @@ class OptNetwork(nn.Module):
         FTY1_corrected = self.FTY1/R
 
         # Calculate loss
-        loss = torch.mean((torch.abs(FTY1_corrected) - torch.abs(self.corrected_FTY2))**2)
+        loss = torch.mean((torch.abs(FTY1_corrected)/torch.max(torch.abs(FTY1_corrected)) - torch.abs(self.corrected_FTY2)/torch.max(torch.abs(self.corrected_FTY2)))**2)
         return loss
     
 

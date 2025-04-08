@@ -42,7 +42,7 @@ eps = torch.ones(len(ROI_w), dtype=torch.float32) * epsiloni
 
 if __name__=="__main__":
 
-    lr = 0.1
+    lr = 1e-2
     max_epochs = 5000
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -72,10 +72,10 @@ if __name__=="__main__":
     ROI_corrected_FTY2 = torch.abs(ROI_corrected_FTY2)
 
     plt.figure(0)
-    # plt.plot(ROI_freqs*1e-12, ROI_corrected_FTY1/torch.max(ROI_corrected_FTY1), linewidth=3, label=f"3.77 mW high gate") 
-    # plt.plot(ROI_freqs*1e-12, ROI_corrected_FTY2/torch.max(ROI_corrected_FTY2), linewidth=3, label=f"0.73 mW low gate") 
-    plt.plot(ROI_freqs*1e-12, ROI_corrected_FTY1, linewidth=3, label=f"3.77 mW high gate") 
-    plt.plot(ROI_freqs*1e-12, ROI_corrected_FTY2, linewidth=3, label=f"0.73 mW low gate")
+    plt.plot(ROI_freqs*1e-12, ROI_corrected_FTY1/torch.max(ROI_corrected_FTY1), linewidth=3, label=f"3.77 mW high gate") 
+    plt.plot(ROI_freqs*1e-12, ROI_corrected_FTY2/torch.max(ROI_corrected_FTY2), linewidth=3, label=f"0.73 mW low gate") 
+    # plt.plot(ROI_freqs*1e-12, ROI_corrected_FTY1, linewidth=3, label=f"3.77 mW high gate") 
+    # plt.plot(ROI_freqs*1e-12, ROI_corrected_FTY2, linewidth=3, label=f"0.73 mW low gate")
     plt.yscale("log") 
     plt.title(f'Corrected THz Spectrum with fre_dep_eps')
     plt.xlabel("Frequency (THz)")
@@ -83,3 +83,14 @@ if __name__=="__main__":
     plt.xlim(left=0)
     plt.legend(loc='upper right')
     plt.savefig("fre_dep_eps_E_frequency.png")
+
+    plt.figure(1)
+    plt.plot(ROI_freqs*1e-12, opt_eps, linewidth=3)
+    plt.scatter(ROI_freqs*1e-12, opt_eps, s=100, color='red')
+    # plt.yscale("log") 
+    plt.title(f'Optimized eps function')
+    plt.xlabel("Frequency (THz)")
+    plt.ylabel("Epsiloni (a.u.)")
+    plt.xlim(left=0)
+    plt.legend(loc='upper right')
+    plt.savefig("EPS_frequency.png")
